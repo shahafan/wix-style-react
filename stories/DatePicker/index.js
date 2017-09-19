@@ -17,6 +17,8 @@ import ExampleControlledCloseOnSelect from './ExampleControlledShouldCloseOnSele
 import ExampleControlledCloseOnSelectRaw from '!raw-loader!./ExampleControlledShouldCloseOnSelect';
 import ExampleControlledYearMonthDropdowns from './ExampleControlledYearMonthDropdownEnabled';
 import ExampleControlledYearMonthDropdownsRaw from '!raw-loader!./ExampleControlledYearMonthDropdownEnabled';
+import ExampleTriggerOpen from './ExampleTriggerOpen';
+import ExampleTriggerOpenRaw from '!raw-loader!./ExampleTriggerOpen';
 
 storiesOf('Core', module)
   .add('DatePicker', () => (
@@ -51,6 +53,10 @@ storiesOf('Core', module)
           code={ExampleControlledYearMonthDropdownsRaw}
           >
           <ExampleControlledYearMonthDropdowns/>
+        </CodeExample>
+
+        <CodeExample title="Trigger open and close date picker" code={ExampleTriggerOpenRaw}>
+          <ExampleTriggerOpen/>
         </CodeExample>
       </div>
       <Markdown source={ReadmeTestkit}/>

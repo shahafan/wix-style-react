@@ -64,11 +64,20 @@ export default class DatePicker extends WixComponent {
     );
   }
 
+  open() {
+    this.calendar.setOpen(true);
+  }
+
+  close() {
+    this.calendar.setOpen(false);
+  }
+
   render() {
     return (
       <div className={css.wrapper}>
         <ReactDatepicker
           {...this.props}
+          ref={calendar => this.calendar = calendar}
           selected={this.props.value}
           onChange={val => {
             if (this.filterDate(val)) {
