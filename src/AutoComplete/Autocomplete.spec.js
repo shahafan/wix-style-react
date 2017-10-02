@@ -51,6 +51,11 @@ describe('Autocomplete', () => {
     expect(dropdownLayoutDriver.optionsLength()).toBe(options.length);
   });
 
+  it('should have autocomplete prop', () => {
+    const {inputDriver} = createDriver(<AutoComplete autocomplete="off"/>);
+    expect(inputDriver.getAutocomplete()).toBe('off');
+  });
+
   describe('testkit', () => {
     it('should exist', () => {
       const div = document.createElement('div');
