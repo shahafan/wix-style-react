@@ -4,6 +4,7 @@ import WixComponent from '../BaseComponents/WixComponent';
 import Input from '../Input';
 import omit from 'omit';
 import DropdownLayout from '../DropdownLayout/DropdownLayout';
+import * as _ from 'lodash';
 
 class InputWithOptions extends WixComponent {
 
@@ -65,7 +66,9 @@ class InputWithOptions extends WixComponent {
   }
 
   _renderDropdownLayout() {
-    const dropdownProps = Object.assign(omit(Object.keys(Input.propTypes).concat(['dataHook']), this.props), this.dropdownAdditionalProps());
+    const inputOnlyProps = omit(['tabIndex'], Input.propTypes);
+    const dropdownProps = Object.assign(omit(Object.keys(inputOnlyProps).concat(['dataHook']), this.props), this.dropdownAdditionalProps());
+
     const customStyle = {marginLeft: this.props.dropdownOffsetLeft};
     if (this.props.dropdownWidth) {
       customStyle.width = this.props.dropdownWidth;

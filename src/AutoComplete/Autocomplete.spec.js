@@ -51,9 +51,15 @@ describe('Autocomplete', () => {
     expect(dropdownLayoutDriver.optionsLength()).toBe(options.length);
   });
 
-  it('should have autocomplete prop', () => {
+  it('should support autocomplete prop', () => {
     const {inputDriver} = createDriver(<AutoComplete autocomplete="off"/>);
     expect(inputDriver.getAutocomplete()).toBe('off');
+  });
+
+  it('should support tabIndex prop', () => {
+    const {dropdownLayoutDriver} = createDriver(<AutoComplete tabIndex={-1}/>);
+
+    expect(dropdownLayoutDriver.tabIndex()).toBe(-1);
   });
 
   describe('testkit', () => {
