@@ -24,6 +24,7 @@ class ControlledAutoComplete extends React.Component {
     this.onSelect2 = this.onSelect2.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onChange2 = this.onChange2.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   onSelect(option) {
@@ -42,17 +43,24 @@ class ControlledAutoComplete extends React.Component {
     this.setState({value2: event.target.value});
   }
 
+  submit(e) {
+    e.preventDefault();
+    alert('submitted');
+  }
+
   render() {
     return (
-      <div>
+      <form onSubmit={this.submit}>
         <div style={style} className="ltr">
-          Select by clicking tab to move to next(A11y)
+          <b>* Must enter field </b>
           <AutoComplete
             dataHook="story-autocomplete"
+            autocomplete="off"
             options={options}
             value={this.state.value}
             onChange={this.onChange}
             onSelect={this.onSelect}
+            required={true}
             placeholder={'Start typing'}
             tabIndex={-1}
             predicate={option => option.value.toLowerCase().indexOf(this.state.value.toLowerCase()) !== -1}
@@ -72,12 +80,14 @@ class ControlledAutoComplete extends React.Component {
             predicate={option => option.value.toLowerCase().indexOf(this.state.value2.toLowerCase()) !== -1}
             />
         </div>
-      </div>
+        <button>Try to submit</button>
+      </form>
     );
   }
 }
 
 export default () =>
   <div>
+    <h3>Tab to next field (A11y)</h3>
     <ControlledAutoComplete/>
   </div>;

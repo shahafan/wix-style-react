@@ -62,6 +62,12 @@ describe('Autocomplete', () => {
     expect(dropdownLayoutDriver.tabIndex()).toBe(-1);
   });
 
+  it('should support required prop', () => {
+    const {inputDriver} = createDriver(<AutoComplete required={true}/>);
+
+    expect(inputDriver.getRequired()).toBeTruthy();
+  });
+
   describe('testkit', () => {
     it('should exist', () => {
       const div = document.createElement('div');
