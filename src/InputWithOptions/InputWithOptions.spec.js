@@ -108,18 +108,6 @@ const runInputWithOptionsTest = driverFactory => {
       expect(onManuallyInput).toBeCalledWith('my text', undefined);
     });
 
-    it('should blur on tab key press', () => {
-      const onManuallyInput = jest.fn();
-      const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<InputWithOptions options={options} onManuallyInput={onManuallyInput}/>);
-      inputDriver.focus();
-      inputDriver.enterText('Option 1');
-      driver.pressDownKey();
-      expect(inputDriver.isFocus()).toBe(true);
-      driver.pressTabKey();
-      expect(inputDriver.isFocus()).toBe(false);
-      expect(dropdownLayoutDriver.isShown()).toBe(false);
-    });
-
     it('should stay focused on tab key press with closeOnSelect=false', () => {
       const onManuallyInput = jest.fn();
       const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<InputWithOptions options={options} onManuallyInput={onManuallyInput} closeOnSelect={false}/>);
