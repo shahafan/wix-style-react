@@ -83,3 +83,12 @@ $grid-row-margin-bottom: 30px;
 @media (min-width: $screen-lg-min) {
 	@include rtl-float-grid-columns(lg);
 }
+
+.row {
+	display: flex;
+
+	&:before,
+	&:after {
+		content: none;
+	}
+}
