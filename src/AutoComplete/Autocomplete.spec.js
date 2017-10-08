@@ -63,7 +63,7 @@ describe('Autocomplete', () => {
   });
 
   it('should support required prop', () => {
-    const {inputDriver} = createDriver(<AutoComplete required={true}/>);
+    const {inputDriver} = createDriver(<AutoComplete required/>);
 
     expect(inputDriver.getRequired()).toBeTruthy();
   });

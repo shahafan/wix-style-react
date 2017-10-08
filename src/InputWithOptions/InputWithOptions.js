@@ -4,7 +4,6 @@ import WixComponent from '../BaseComponents/WixComponent';
 import Input from '../Input';
 import omit from 'omit';
 import DropdownLayout from '../DropdownLayout/DropdownLayout';
-import * as _ from 'lodash';
 
 class InputWithOptions extends WixComponent {
 

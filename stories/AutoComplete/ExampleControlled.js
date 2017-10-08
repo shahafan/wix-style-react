@@ -20,27 +20,17 @@ class ControlledAutoComplete extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: '', value2: ''};
-    this.onSelect = this.onSelect.bind(this);
-    this.onSelect2 = this.onSelect2.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onChange2 = this.onChange2.bind(this);
+    this.onSelectFor = this.onSelectFor.bind(this);
+    this.onChangeFor = this.onChangeFor.bind(this);
     this.submit = this.submit.bind(this);
   }
 
-  onSelect(option) {
-    this.setState({value: option.value});
+  onSelectFor(property) {
+    return option => this.setState({[property]: option.value});
   }
 
-  onSelect2(option) {
-    this.setState({value2: option.value});
-  }
-
-  onChange(event) {
-    this.setState({value: event.target.value});
-  }
-
-  onChange2(event) {
-    this.setState({value2: event.target.value});
+  onChangeFor(property) {
+    return event => this.setState({[property]: event.target.value});
   }
 
   submit(e) {
@@ -58,9 +48,9 @@ class ControlledAutoComplete extends React.Component {
             autocomplete="off"
             options={options}
             value={this.state.value}
-            onChange={this.onChange}
-            onSelect={this.onSelect}
-            required={true}
+            onChange={this.onChangeFor('value')}
+            onSelect={this.onSelectFor('value')}
+            required
             placeholder={'Start typing'}
             tabIndex={-1}
             predicate={option => option.value.toLowerCase().indexOf(this.state.value.toLowerCase()) !== -1}
@@ -74,13 +64,13 @@ class ControlledAutoComplete extends React.Component {
             options={options}
             tabIndex={-1}
             value={this.state.value2}
-            onChange={this.onChange2}
-            onSelect={this.onSelect2}
+            onChange={this.onChangeFor('value2')}
+            onSelect={this.onSelectFor('value2')}
             placeholder={'Start typing'}
             predicate={option => option.value.toLowerCase().indexOf(this.state.value2.toLowerCase()) !== -1}
             />
         </div>
-        <button>Try to submit</button>
+        <button type="submit">Try to submit</button>
       </form>
     );
   }
