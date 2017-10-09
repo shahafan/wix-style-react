@@ -51,23 +51,6 @@ describe('Autocomplete', () => {
     expect(dropdownLayoutDriver.optionsLength()).toBe(options.length);
   });
 
-  it('should support autocomplete prop', () => {
-    const {inputDriver} = createDriver(<AutoComplete autocomplete="off"/>);
-    expect(inputDriver.getAutocomplete()).toBe('off');
-  });
-
-  it('should support tabIndex prop', () => {
-    const {dropdownLayoutDriver} = createDriver(<AutoComplete tabIndex={-1}/>);
-
-    expect(dropdownLayoutDriver.tabIndex()).toBe(-1);
-  });
-
-  it('should support required prop', () => {
-    const {inputDriver} = createDriver(<AutoComplete required/>);
-
-    expect(inputDriver.getRequired()).toBeTruthy();
-  });
-
   describe('testkit', () => {
     it('should exist', () => {
       const div = document.createElement('div');

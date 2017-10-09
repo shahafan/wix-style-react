@@ -206,6 +206,23 @@ const runInputWithOptionsTest = driverFactory => {
       expect(onManualInput).toBeCalled();
     });
 
+    it('should support autocomplete prop', () => {
+      const {inputDriver} = createDriver(<InputWithOptions autocomplete="off"/>);
+      expect(inputDriver.getAutocomplete()).toBe('off');
+    });
+
+    it('should support tabIndex prop', () => {
+      const {dropdownLayoutDriver} = createDriver(<InputWithOptions tabIndex={-1}/>);
+
+      expect(dropdownLayoutDriver.tabIndex()).toBe(-1);
+    });
+
+    it('should support required prop', () => {
+      const {inputDriver} = createDriver(<InputWithOptions required/>);
+
+      expect(inputDriver.getRequired()).toBeTruthy();
+    });
+
     describe('testkit', () => {
       it('should exist', () => {
         const div = document.createElement('div');

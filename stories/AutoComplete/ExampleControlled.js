@@ -19,65 +19,35 @@ const options = [
 class ControlledAutoComplete extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: '', value2: ''};
-    this.onSelectFor = this.onSelectFor.bind(this);
-    this.onChangeFor = this.onChangeFor.bind(this);
-    this.submit = this.submit.bind(this);
+    this.state = {value: ''};
+    this.onSelect = this.onSelect.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  onSelectFor(property) {
-    return option => this.setState({[property]: option.value});
+  onSelect(option) {
+    this.setState({value: option.value});
   }
 
-  onChangeFor(property) {
-    return event => this.setState({[property]: event.target.value});
-  }
-
-  submit(e) {
-    e.preventDefault();
-    alert('submitted');
+  onChange(event) {
+    this.setState({value: event.target.value});
   }
 
   render() {
     return (
-      <form onSubmit={this.submit}>
-        <div style={style} className="ltr">
-          <b>* Must enter field </b>
-          <AutoComplete
-            dataHook="story-autocomplete"
-            autocomplete="off"
-            options={options}
-            value={this.state.value}
-            onChange={this.onChangeFor('value')}
-            onSelect={this.onSelectFor('value')}
-            required
-            placeholder={'Start typing'}
-            tabIndex={-1}
-            predicate={option => option.value.toLowerCase().indexOf(this.state.value.toLowerCase()) !== -1}
-            />
-        </div>
-        <div style={style} className="ltr">
-          No native auto complete
-          <AutoComplete
-            dataHook="story-autocomplete-2"
-            autocomplete="off"
-            options={options}
-            tabIndex={-1}
-            value={this.state.value2}
-            onChange={this.onChangeFor('value2')}
-            onSelect={this.onSelectFor('value2')}
-            placeholder={'Start typing'}
-            predicate={option => option.value.toLowerCase().indexOf(this.state.value2.toLowerCase()) !== -1}
-            />
-        </div>
-        <button type="submit">Try to submit</button>
-      </form>
+      <AutoComplete
+        dataHook="story-autocomplete"
+        options={options}
+        value={this.state.value}
+        onChange={this.onChange}
+        onSelect={this.onSelect}
+        placeholder={'Start typing'}
+        predicate={option => option.value.toLowerCase().indexOf(this.state.value.toLowerCase()) !== -1}
+        />
     );
   }
 }
 
 export default () =>
-  <div>
-    <h3>Tab to next field (A11y)</h3>
+  <div className="ltr" style={style}>
     <ControlledAutoComplete/>
   </div>;
