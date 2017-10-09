@@ -108,6 +108,19 @@ const runInputWithOptionsTest = driverFactory => {
       expect(onManuallyInput).toBeCalledWith('my text', undefined);
     });
 
+    it('should close dropdown on press tab key', () => {
+      const onManuallyInput = jest.fn();
+      const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<InputWithOptions options={options} onManuallyInput={onManuallyInput}/>);
+      inputDriver.focus();
+      driver.pressDownKey();
+      expect(inputDriver.isFocus()).toBe(true);
+      expect(dropdownLayoutDriver.isShown()).toBe(true);
+      driver.pressTabKey();
+      // todo: jest limitation of mimicking native Tab browser behaviour
+      // expect(inputDriver.isFocus()).toBe(false);
+      expect(dropdownLayoutDriver.isShown()).toBe(false);
+    });
+
     it('should stay focused on tab key press with closeOnSelect=false', () => {
       const onManuallyInput = jest.fn();
       const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<InputWithOptions options={options} onManuallyInput={onManuallyInput} closeOnSelect={false}/>);
