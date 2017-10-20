@@ -10,7 +10,7 @@
 | data | array | [] | - | The data to display |
 | columns | array | [] | - | Configuration of the table's columns. See table below |
 | showHeaderWhenEmpty | bool | false | - | Should the table show the header when data is empty |
-| rowDataHook | string | - | - | A data-hook to apply to all table body rows |
+| rowDataHook | string or func | - | - | A string data-hook to apply to all table body rows. or a func which calculates the data-hook for each row  - Signature: `(rowData, rowNum) => string`|
 | rowClass | string | - | - | A class to apply to all table body rows |
 | dynamicRowClass | func | - | - | A func that gets row data and returns a class(es) to apply to that specific row |
 | onRowClick | func | - | - | A callback method to be called on row click. Signature: `onRowClick(rowData, rowNum)` |
@@ -28,6 +28,10 @@
 | thPadding | string | '5px' | - | Table headers padding |
 | thHeight | string | '36px' | - | Table headers height |
 | thFontSize | string | '12px' | - | Table headers font size |
+| thBorder | string | '1px' | - | Table headers border |
+| thColor | string | '#123456' | - | Table headers color |
+| thOpacity | string | '0.8' | - | Table headers opacity |
+| thLetterSpacing | string | '1.5px' | - | Table headers letter spacing |
 | rowDetails | func | - | - | Function that returns React component that will be rendered in row details section. Example: `rowDetails={(row, rowNum) => <MyRowDetailsComponent {...row} />}` |
 | allowMultiDetailsExpansion | boolean | false | - | Allows to open multiple row details |
 | onSortClick | func | - | - | A callback function called on each column title click. Signature `onSortClick(colData, colNum)` |
@@ -42,3 +46,4 @@
 | important | bool | false | - | Whether font color should be stronger, more dominant |
 | sortable | bool | false | - | Enables sorting by column |
 | sortDescending | bool | - | - | Pass false - for ascending sort, true - for descending|
+| style | string | - | - | Sets the column inline style |

@@ -13,7 +13,9 @@ class MultiSelect extends InputWithOptions {
     this.onPaste = this.onPaste.bind(this);
     this.state = {pasteDetected: false};
 
-    console.warn('MultiSelect: onSelect signature should get an array of tags instead of single tag as parameter. Old signature will not be supported starting from 16/09/2017');
+    if (props.maxHeight) {
+      console.warn('MultiSelect: maxHeight is deprecated, please use maxNumRows instead. maxHeight will not be supported starting from 03/12/2017');
+    }
   }
 
   getUnselectedOptions() {
@@ -36,7 +38,7 @@ class MultiSelect extends InputWithOptions {
 
   inputAdditionalProps() {
     return {
-      inputElement: <InputWithTags maxHeight={this.props.maxHeight}/>,
+      inputElement: <InputWithTags maxHeight={this.props.maxHeight} maxNumRows={this.props.maxNumRows}/>,
       onKeyDown: this.onKeyDown,
       delimiters: this.props.delimiters,
       onPaste: this.onPaste
@@ -71,7 +73,7 @@ class MultiSelect extends InputWithOptions {
 
 
   _onSelect(option) {
-    this.onSelect(option);
+    this.onSelect([option]);
   }
 
   _onManuallyInput(inputValue) {
@@ -108,7 +110,7 @@ class MultiSelect extends InputWithOptions {
         const maybeNearestOption = visibleOptions[0];
 
         if (maybeNearestOption) {
-          this.onSelect(maybeNearestOption);
+          this.onSelect([maybeNearestOption]);
         }
 
         this.clearInput();
@@ -125,19 +127,11 @@ class MultiSelect extends InputWithOptions {
   }
 
   onSelect(options) {
-    if (!Array.isArray(options)) {
-      options = [options];
-    }
-
     this.clearInput();
 
     if (this.props.onSelect) {
       options = options.map(this.optionToTag);
-      if (options.length === 1) {
-        this.props.onSelect(options[0]);
-      } else {
-        this.props.onSelect(options);
-      }
+      this.props.onSelect(options);
     }
 
     this.input.focus();
@@ -157,6 +151,7 @@ class MultiSelect extends InputWithOptions {
   }
 
   clearInput() {
+    this.input.clear();
     if (this.props.onChange) {
       this.props.onChange({target: {value: ''}});
     }
@@ -168,6 +163,7 @@ MultiSelect.propTypes = {
   predicate: PropTypes.func,
   tags: PropTypes.array,
   maxHeight: PropTypes.string,
+  maxNumRows: PropTypes.number,
   delimiters: PropTypes.array
 };
 

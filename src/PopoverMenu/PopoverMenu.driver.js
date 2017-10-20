@@ -11,7 +11,11 @@ const popoverMenuDriverFactory = ({element}) => {
     return fn(...args);
   };
 
-  const itemsArray = () => [...document.body.querySelectorAll(`[data-hook="${menuItemDataHook}"]`)];
+  const itemsArray = () => [
+    ...document.body.querySelectorAll(
+      menuItemDataHook.split(' ').reduce((q, hook) => q + `[data-hook~="${hook}"]`, '')
+    )
+  ];
 
   const driver = {
     exists: () => !!element,
@@ -22,15 +26,15 @@ const popoverMenuDriverFactory = ({element}) => {
         menuItemDataHook = dataHook;
 
         return driver;
-      },
+      }
     },
 
     menu: {
       isShown: protect(() => itemsArray().length > 0),
       itemsLength: protect(() => itemsArray().length),
       itemContentAt: protect(index => itemsArray()[index].querySelectorAll('button >span')[1].innerHTML),
-      clickItemAt: protect(index => ReactTestUtils.Simulate.click(itemsArray()[index].querySelector('button'))),
-    },
+      clickItemAt: protect(index => ReactTestUtils.Simulate.click(itemsArray()[index].querySelector('button')))
+    }
   };
 
   return driver;

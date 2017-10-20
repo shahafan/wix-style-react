@@ -10,6 +10,8 @@
 | getRowsWithClassCount | string | number | num of rows with <arg> class name |
 | getRowText | number | string | get row index <arg> text |
 | getRowClasses | number | string | get row index <arg> classes |
+| getHeaderCellStyle | number | string | get header cell index <arg> inline style |
+| getCellStyle | (rowIndex, colIndex) | string | get cell index <args> inline style |
 | isRowClickable | number | bool | true if row index <arg> is clickable |
 | getTitles | - | map | get map of all titles |
 | isDisplayingNothing | - | bool | true if displaying nothing |
@@ -22,7 +24,8 @@
 | setProps | json | element | returns a clone of this element with the new props from the json |
 | hasRowDetails | string | bool | true if row index has details |
 | getRowDetailsText | string | string | returns details text |
-| hasSortableTitle | string | bool | true if column title is sortable |
+| hasSortableTitle | (index) | bool | true if column title is sortable |
+| hasSortDescending | (index) | bool | true if column title has sort descending style |
 | clickSort | (index, eventData) | - | click with <eventData> the column index <number> |
 | getRowDetails | string | element | returns row details by row index |
 

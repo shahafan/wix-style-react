@@ -1,41 +1,42 @@
 # `<AutoDocs/>`
 
-stop wasting time manually writing documentation of component props.
-Instead, use `<AutoDocs/>`, this way documentation will never go out of
-sync with source code and will always reflect the actual implementation.
+Don't waste time manually typing what props your component accepts.
+Instead, use `<AutoDocs/>` and get documentation automatically!
 
-> this is only a utility component for `wix-style-react` library. It is
-> not exported and should not be used in other projects.
+This way documentation will always reflect the actual implementation.
+
+> `<AutoDocs/>` is only a utility component for usage within
+> `wix-style-react` library. It is not exported and should not be used
+> in other projects.
 
 
 All you need is:
 * `import YourComponentSource from '!raw-loader!/Components/YourComponent'`
 * `<AutoDocs source={YourComponentSource}/>`
 
-Notice the usage of `raw-loader`.
+`AutoDocs` needs raw component source as string so it can parse it.
+Hence the usage of `raw-loader`
 
 
 ### Usage
 
-imaginary `/stories/MyComponent/index.js`:
-
 ```js
-import AutoDocs from '../utils/Components/AutoDocs';
-import MyComponentSource from '!raw-loader!../utils/Components/MyComponent';
+import AutoDocs from './stories/utils/Components/AutoDocs';
+import MyComponentSource from '!raw-loader!./src/MyComponent';
 
 storiesOf('Components', module)
-  .add('MyComponent' () =>
-    <div>
-      <AutoDocs source={MyComponentSource}/>
-    </div>
-  );
+  .add('MyComponent' () => <AutoDocs source={MyComponentSource}/>);
 ```
 
-### Documentation in components 
+> **NOTE**: ensure `MyComponentSource` is the actual source and not something like `export {default} from './DatePicker.js';`
 
-in order for `AutoDocs` to work nicely, your component should have these things:
+### Documentation in components
+
+in order for `AutoDocs` to shine, your component should have these things:
 
 * a description:
+
+  above your component type a comment within `/**` and `*/`
 
   ```js
   /**
@@ -49,11 +50,11 @@ in order for `AutoDocs` to work nicely, your component should have these things:
 
   ```js
   MyComponent.propTypes = {
-    /** this will remove all your code */
+    /** this is prop called `some` it does few things */
     some: string.isRequired,
 
-    /** this will remove all your photos */
-    thing: oneOf(['vacation', 'nudes', 'newborn']).isRequired
+    /** this prop is very picky it does not accept everything */
+    thing: oneOf(['one', 'or', 'another']).isRequired
   };
   ```
 
@@ -61,13 +62,9 @@ in order for `AutoDocs` to work nicely, your component should have these things:
 
   ```js
   MyComponent.defaultProps = {
-    some: 'okay remove my code',
-    thing: 'nudes'
+    some: 'just a string',
+    thing: 'another'
   };
   ```
 
 * `displayName` (either `MyComponent.displayName = 'MyComponent'` or `static displayName = 'MyComponent'`)
-
-All this will give you:
-
-![](/assets/images/autodocs-example.png)

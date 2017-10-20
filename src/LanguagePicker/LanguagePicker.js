@@ -2,79 +2,79 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import WixComponent from '../BaseComponents/WixComponent';
 import Languages from '../Icons/dist/components/Languages';
-import ButtonWithOptions from '../ButtonWithOptions/ButtonWithOptions';
+import IconWithOptions from '../IconWithOptions';
 
 export default class LanguagePicker extends WixComponent {
-  createDividedChildren() {
+  createDividedChildren(availableOptions) {
     const dividerChild = React.cloneElement(
       this.props.children[0], {
         children: '-',
-        languageKey: '-'
+        languageKey: '-',
+        linkTo: '-'
       });
 
-    const dividedChildren = [...this.props.children];
+    const dividedChildren = [...availableOptions];
     dividedChildren.forEach((_, index) => dividedChildren.splice((index * 2) + 1, 0, dividerChild));
     dividedChildren.pop();
 
     return dividedChildren;
   }
 
-  createButtonWithOptionsOptions() {
-    const dividedChildren = this.createDividedChildren();
+  createIconWithOptionsOptions(children) {
+    const availableOptions = children.filter(opt => opt.props.languageKey !== this.props.selectedId);
+    const dividedChildren = this.createDividedChildren(availableOptions);
 
     return dividedChildren.map(languagePickerOption => {
-      const {languageKey} = languagePickerOption.props;
-      const languageName = languagePickerOption.props.children;
+      const {children: languageName, languageKey, linkTo} = languagePickerOption.props;
 
       return (
-        <ButtonWithOptions.Option key={languageKey} id={languageKey}>
+        <IconWithOptions.Option key={languageKey} id={languageKey} linkTo={linkTo}>
           {languageName}
-        </ButtonWithOptions.Option>
+        </IconWithOptions.Option>
       );
     });
   }
 
   render() {
-    const {dataHook, theme, onSelect, dropdownWidth, dropdownOffsetLeft} = this.props;
+    const {children, ...rest} = this.props;
+
     return (
-      <ButtonWithOptions
-        dataHook={dataHook}
-        onSelect={option => onSelect(option.id)}
-        dropdownWidth={dropdownWidth}
-        dropdownOffsetLeft={dropdownOffsetLeft}
-        >
-        <ButtonWithOptions.Button type="button" height="medium" theme={theme}>
-          <Languages size="30px"/>
-        </ButtonWithOptions.Button>
-        {this.createButtonWithOptionsOptions()}
-      </ButtonWithOptions>
+      <IconWithOptions {...rest}>
+        <IconWithOptions.Icon><Languages size="18"/></IconWithOptions.Icon>
+        {this.createIconWithOptionsOptions(children)}
+      </IconWithOptions>
     );
   }
 }
 
+LanguagePicker.displayName = 'LanguagePicker';
+
 LanguagePicker.defaultProps = {
-  theme: 'icon-greybackground',
-  onSelect: () => {},
-  dropdownWidth: '100px',
-  dropdownOffsetLeft: '-30px'
+  itemHeight: 'big',
+  maxHeightPixels: 566
 };
 
 LanguagePicker.propTypes = {
-  dataHook: PropTypes.string,
-  onSelect: PropTypes.func,
-  theme: PropTypes.string,
+  ...IconWithOptions.propTypes,
+
+  /**
+    * Specify the languages list to render
+    *
+    * children __must__ be `<LanguagePicker.Option/>` component with:
+    *   * `languageKey` - string, required
+    *   * `children` - string
+    */
   children: PropTypes.arrayOf((propValue, key) => {
     if (propValue[key].type !== LanguagePicker.Option) {
       return new Error(`LanguagePicker: Invalid Prop children was given. Validation failed on child number ${key}`);
     }
-  }),
-  dropdownWidth: PropTypes.string,
-  dropdownOffsetLeft: PropTypes.string,
+  })
 };
 
 LanguagePicker.Option = () => null;
 
 LanguagePicker.Option.propTypes = {
   languageKey: PropTypes.string.isRequired,
+  linkTo: PropTypes.string,
   children: PropTypes.string
 };

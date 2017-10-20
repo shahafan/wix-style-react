@@ -16,7 +16,7 @@ export const DataTableHeader = props => (
 );
 
 DataTableHeader.propTypes = {
-  width: PropTypes.number,
+  width: PropTypes.number
 };
 
 class DataTable extends WixComponent {
@@ -40,7 +40,6 @@ class DataTable extends WixComponent {
           this.setState({lastPage: this.calcLastPage(nextProps)});
         }
       }
-
       if (!isLoadingMore) {
         this.setState(this.createInitialScrollingState(nextProps));
       }
@@ -137,7 +136,11 @@ class DataTable extends WixComponent {
     }
 
     if (rowDataHook) {
-      optionalRowProps['data-hook'] = rowDataHook;
+      if (typeof rowDataHook === 'string') {
+        optionalRowProps['data-hook'] = rowDataHook;
+      } else {
+        optionalRowProps['data-hook'] = rowDataHook(rowData, rowNum);
+      }
     }
 
     if (dynamicRowClass) {
@@ -157,7 +160,10 @@ class DataTable extends WixComponent {
 
       rowsToRender.push(
         <tr key={`${rowNum}_details`} className={classNames(s.rowDetails)}>
-          <td data-hook={`${rowNum}_details`} className={classNames(s.details, showDetails ? s.active : '')} colSpan={this.props.columns.length}>
+          <td
+            data-hook={`${rowNum}_details`} className={classNames(s.details, showDetails ? s.active : '')}
+            colSpan={this.props.columns.length}
+            >
             <div className={classNames(s.rowDetailsInner)}>
               <Animator show={showDetails} height>
                 {rowDetails(rowData, rowNum)}
@@ -173,7 +179,12 @@ class DataTable extends WixComponent {
 
   renderCell = (rowData, column, rowNum, colNum) => {
     const classes = classNames({[s.important]: column.important});
-    return <td className={classes} key={colNum}>{column.render && column.render(rowData, rowNum)}</td>;
+    return (<td
+      style={column.style} className={classes}
+      key={colNum}
+      >
+      {column.render && column.render(rowData, rowNum)}
+    </td>);
   };
 
   calcLastPage = ({data, itemsPerPage}) => Math.ceil(data.length / itemsPerPage) - 1;
@@ -201,6 +212,10 @@ class TableHeader extends Component {
     thPadding: PropTypes.string,
     thHeight: PropTypes.string,
     thFontSize: PropTypes.string,
+    thBorder: PropTypes.string,
+    thColor: PropTypes.string,
+    thOpacity: PropTypes.string,
+    thLetterSpacing: PropTypes.string,
     columns: PropTypes.array
   };
 
@@ -218,6 +233,10 @@ class TableHeader extends Component {
       padding: this.props.thPadding,
       height: this.props.thHeight,
       fontSize: this.props.thFontSize,
+      border: this.props.thBorder,
+      color: this.props.thColor,
+      opacity: this.props.thOpacity,
+      letterSpacing: this.props.thLetterSpacing,
       cursor: column.sortable === undefined ? 'arrow' : 'pointer'
     };
 
@@ -286,7 +305,10 @@ DataTable.propTypes = {
     sortDescending: PropTypes.bool
   })),
   showHeaderWhenEmpty: PropTypes.bool,
-  rowDataHook: PropTypes.string,
+  rowDataHook: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.string
+  ]),
   rowClass: PropTypes.string,
   dynamicRowClass: PropTypes.func,
   onRowClick: PropTypes.func,
@@ -303,9 +325,13 @@ DataTable.propTypes = {
   thPadding: PropTypes.string,
   thHeight: PropTypes.string,
   thFontSize: PropTypes.string,
+  thBorder: PropTypes.string,
+  thColor: PropTypes.string,
+  thOpacity: PropTypes.string,
+  thLetterSpacing: PropTypes.string,
   rowDetails: PropTypes.func,
   allowMultiDetailsExpansion: PropTypes.bool,
-  hideHeader: PropTypes.bool,
+  hideHeader: PropTypes.bool
 };
 
 DataTable.displayName = 'DataTable';

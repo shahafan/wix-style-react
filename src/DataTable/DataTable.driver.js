@@ -11,13 +11,19 @@ const dataTableDriverFactory = ({element, wrapper, component}) => {
   const getRows = () => element.querySelectorAll('tbody tr[data-table-row="dataTableRow"]');
   const getRowsCount = () => getRows().length;
   const getRow = rowIndex => getRows()[rowIndex];
+  const getCell = (rowIndex, cellIndex) => getRow(rowIndex).querySelectorAll('td')[cellIndex];
   const getRowDetails = index => element.querySelector(`tbody tr td[data-hook="${index}_details"]`);
   const getHeaderTitleByIndex = index => getHeader().querySelectorAll('th')[index];
+  const getSortableTitle = index => element.querySelector(`th [data-hook="${index}_title"]`);
   return {
     getRowsCount,
     getRowsWithClassCount: className => values(getRows()).filter(elem => elem.classList.contains(className)).length,
+    getRowsWithDataHook: dataHookName => element.querySelectorAll(`[data-hook="${dataHookName}"]`),
+    getRowWithDataHook: dataHookName => element.querySelector(`[data-hook="${dataHookName}"]`),
     getRowText: index => values(getRows()[index].querySelectorAll('td')).map(td => td.textContent),
     getRowClasses: index => values(getRows()[index].classList),
+    getHeaderCellStyle: index => getHeaderTitleByIndex(index).style,
+    getCellStyle: (rowIndex, colIndex) => getCell(rowIndex, colIndex).style,
     isRowClickable: index => getRows()[index].classList.contains('clickableDataRow'),
     getTitles: () => values(getHeader().querySelectorAll('th')).map(th => th.textContent),
     isDisplayingNothing: () => !!element,
@@ -33,7 +39,11 @@ const dataTableDriverFactory = ({element, wrapper, component}) => {
     },
     hasRowDetails: index => !!getRowDetails(index),
     getRowDetailsText: index => getRowDetails(index).textContent,
-    hasSortableTitle: index => !!element.querySelector(`th [data-hook="${index}_title"]`),
+    hasSortableTitle: index => !!getSortableTitle(index),
+    hasSortDescending: index => {
+      const sortableTitle = getSortableTitle(index);
+      return !!sortableTitle && sortableTitle.classList.contains('sortArrowAsc');
+    },
     clickSort: (index, eventData) => ReactTestUtils.Simulate.click(getHeaderTitleByIndex(index), eventData),
     getRowDetails: index => getRowDetails(index)
   };

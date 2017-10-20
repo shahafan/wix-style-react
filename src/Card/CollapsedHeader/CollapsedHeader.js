@@ -29,7 +29,7 @@ class CollapsedHeader extends WixComponent {
     toggleStyle: 'switch',
     withoutDivider: false,
     buttonCollapseText: 'Less',
-    buttonExpandText: 'More',
+    buttonExpandText: 'More'
   };
 
   constructor(props) {
@@ -63,7 +63,7 @@ class CollapsedHeader extends WixComponent {
     const headerClasses = classNames({
       [styles.headerOnlyTitle]: !subtitle,
       [styles.headerTitleSubtitle]: subtitle,
-      [styles.withDivider]: !withoutDivider,
+      [styles.withDivider]: !withoutDivider
     });
 
     const switchElement = (
@@ -80,6 +80,7 @@ class CollapsedHeader extends WixComponent {
           prefixIcon={this.state.isCollapsed ? <ArrowDownThin/> : <ArrowUpThin/>}
           onClick={this.toggleCollapsed}
           theme="whiteblueprimary"
+          type="button"
           >
           {this.state.isCollapsed ? buttonExpandText : buttonCollapseText}
         </Button>
