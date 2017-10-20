@@ -18,7 +18,8 @@ story({
   componentProps: {
     disabled: false,
     theme: 'fullblue',
-    children: 'Click Me'
+    children: 'Click Me',
+    dataHook: 'storybook-button-preview'
   },
   exampleProps: {
     onClick: () => 'Clicked!',
