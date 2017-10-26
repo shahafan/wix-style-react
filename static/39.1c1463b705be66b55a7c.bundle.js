@@ -1,0 +1,1 @@
+webpackJsonp([39],{480:function(module,exports){module.exports="export {default} from './TextLabel.js';\n"}});

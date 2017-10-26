@@ -1,0 +1,1 @@
+webpackJsonp([20],{499:function(module,exports){module.exports="export {default} from './Slider.js';\n"}});

@@ -1,0 +1,1 @@
+webpackJsonp([555],{1402:function(module,exports){module.exports="import inputAreaWithLabelCompositeDriverFactory from '../Composite/InputAreaWithLabelComposite/InputAreaWithLabelComposite.protractor.driver';\n\nconst autoCompleteCompositeDriverFactory = component => inputAreaWithLabelCompositeDriverFactory(component);\n\nexport default autoCompleteCompositeDriverFactory;\n"}});

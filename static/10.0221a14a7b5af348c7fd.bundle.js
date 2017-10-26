@@ -1,0 +1,1 @@
+webpackJsonp([10],{509:function(module,exports){module.exports="export {default} from './Tabs';\n"}});

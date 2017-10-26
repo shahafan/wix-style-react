@@ -1,0 +1,1 @@
+webpackJsonp([468],{1489:function(module,exports){module.exports="const FieldWithSelectionCompositeDriverFactory = component => ({\n  getLabel: () => component.find('label'),\n  element: () => component\n});\n\nexport default FieldWithSelectionCompositeDriverFactory;\n"}});

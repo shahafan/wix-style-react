@@ -1,0 +1,1 @@
+webpackJsonp([807],{3715:function(module,exports){module.exports="@import '../../common.scss';\n\n.label {\n\tmargin-bottom: 6px;\n}\n\n.withLabelAttributes {\n\tdisplay: flex;\n\talign-items: center;\n}\n\n.inputWrapper {\n\tflex: 1;\n}"}});
